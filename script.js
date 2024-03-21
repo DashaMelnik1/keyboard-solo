@@ -40,7 +40,7 @@ document.addEventListener('keypress', (event) => {
     }
     if (i === currentWord.length) {
         correctCount.textContent = ++correctCount.textContent;
-        nextWord();
+        setTimeout(nextWord, 0);
     }
 })
 
