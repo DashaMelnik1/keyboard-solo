@@ -19,8 +19,14 @@ function renderWord(word) {
 }
 
 let i = 0;
+let timerId;
+let isRunning = false;
 
 document.addEventListener('keypress', (event) => {
+    if (!isRunning) {
+        timerId = setInterval(countTimer, 1000);
+        isRunning = !isRunning;
+    }
     console.log(event.key, currentWord);
     let randomLetters = Array.from(document.querySelectorAll('.word span'));
 
@@ -51,16 +57,21 @@ function clearContainer() {
     wrongCount.textContent = 0;
     clearInterval(timerId);
     timer.textContent = '00:00';
+    seconds = 1;
+    minutes = 0;
+
 }
 
 function result() {
     if (wrongCount.textContent >= 5) {
         alert(`Вы проиграли!Ваше время: ${timer.textContent}`);
         clearContainer();
+        isRunning = false;
     }
     if (correctCount.textContent >= 5) {
         alert(`Вы победили! Ваше время: ${timer.textContent}`);
         clearContainer();
+        isRunning = false;
     }
 }
 
@@ -74,7 +85,7 @@ function format(val) {
     return val;
 }
 
-let timerId = setInterval(countTimer, 1000);
+
 
 function countTimer() {
     timer.innerHTML = `${format(minutes)}:${format(seconds)}`;
